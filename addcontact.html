@@ -1,0 +1,71 @@
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+    <h1 class="mt-5 mb-4">Add Contact </h1>
+    <br/>
+    <form id="editform">
+        <div id="text">
+        <label for="firstname">Firstname</label>
+        <input type="text" name="firstname" id="firstname">
+        <label for="lastname">Lastname</label>
+        <input type="text" name="lastname" id="lastname">
+        <label for="mobile">Mobile</label>
+        <input type="text" name="mobile" id="mobile">
+        <label for="email">Email</label>
+        <input type="text" name="email" id="email">
+        <label for="avatar">Select a file</label><br>
+        <input type="file" name="avatar" id="avatar"><br>
+        </div>
+
+    </form>
+    <br>
+    <div id="button-container " class="mt-4">
+    <button type="submit" id="submitform" class="btn btn-success">submit</button>
+    <button id="homelink" type="button" class="btn btn-primary">home</button>
+    </div>
+
+    <script src="config.js"></script>
+    <script>
+        document.getElementById(submitform).addEventListener('click',submitform)
+        document.getElementById(homelink).addEventListener('click', homelink)
+
+        function submitform(e) {
+            e.preventDefault();
+
+            const form= new FormData(document.querySelector('#reditform'));
+            form.append('apiKey',apikey);
+
+            fetch(rootpath + 'controller/insert-contact/',{
+                method : 'POST',
+                headers:{'Accept':'application/json , *.*'},
+                body : form
+            })
+            .then(function (response) {
+                return response.text();
+            })
+            .then(function(data) {
+                if (data =="1") {
+                    alert("Contact Added.");
+                    homelink();
+                 }else{
+                    alert(data);
+                    homelink();
+                 }
+                
+            })
+            
+        }
+        function homelink() {
+            window.open("index","_self");
+            
+        }
+        
+    </script>
+    
+</body>
+</html>
